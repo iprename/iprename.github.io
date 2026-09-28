@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bulk File Renamer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Bulk File Renamer</h1>
+    <p>Runs entirely in your browser. Files never leave your device.</p>
+
+    <div class="controls-card">
+      <button id="selectFolderBtn" class="primary-btn">1. Select Folder</button>
+      
+      <div class="rules-section">
+        <h3>Renaming Rules</h3>
+        <div class="rule-group">
+          <label for="findText">Find text:</label>
+          <input type="text" id="findText" placeholder="e.g., IMG">
+          
+          <label for="replaceText">Replace with:</label>
+          <input type="text" id="replaceText" placeholder="e.g., Vacation">
+        </div>
+      </div>
+
+      <button id="renameBtn" class="success-btn" disabled>2. Execute Rename</button>
+    </div>
+
+    <table id="previewTable">
+      <thead>
+        <tr>
+          <th>Original Name</th>
+          <th>New Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="fileList">
+        <tr>
+          <td colspan="3" class="empty-state">Select a folder to see files...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
