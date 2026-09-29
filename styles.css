@@ -7,21 +7,27 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #f3f4f6;
   color: #1f2937;
-  padding: 2rem 0; 
   margin: 0;
-  /* Prevent the main website body from scrolling if possible */
+  padding: 0;
+  /* FORCES the website to never scroll at the page level */
+  height: 100vh; 
   overflow: hidden; 
 }
 
-/* Stretches to 96% of the screen */
+/* Stretches to 96% of the screen and acts as a strict full-height column */
 .container { 
   width: 96%; 
   max-width: none; 
   margin: 0 auto; 
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
 }
 
 /* Header styling */
 .app-header {
+  flex: 0 0 auto; /* Locks header height */
   text-align: left;
   margin-bottom: 1.5rem;
 }
@@ -32,19 +38,17 @@ body {
 .main-layout {
   display: flex;
   gap: 2rem; 
-  align-items: flex-start; 
+  flex: 1; /* Fills all remaining space below header */
+  min-height: 0; /* CRITICAL: allows the columns inside to scroll */
 }
 
-/* --- THE FOOLPROOF FIX: INTERNAL SCROLLING --- */
+/* --- LEFT PANEL: Scrolls Independently --- */
 .left-panel {
   flex: 1; 
-  min-width: 0; 
-  /* Limits height to the screen size minus the header/margins */
-  max-height: calc(100vh - 130px); 
-  overflow-y: auto; /* Forces a scrollbar ONLY on the file list */
+  background: white; 
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  background: white;
+  overflow-y: auto; /* Forces internal scrollbar for the table */
 }
 
 /* Custom scrollbar for the file list */
@@ -53,10 +57,15 @@ body {
 .left-panel::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 4px; }
 .left-panel::-webkit-scrollbar-thumb:hover { background: #6b7280; }
 
+/* --- RIGHT PANEL: Locked in place --- */
 .right-panel {
   flex: 0 0 420px; 
-  /* We removed sticky, it just sits here permanently now */
+  overflow-y: auto; /* Only scrolls internally if your screen is super tiny */
 }
+
+/* Custom scrollbar for right panel just in case */
+.right-panel::-webkit-scrollbar { width: 6px; }
+.right-panel::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
 /* Highly Compact Controls Card */
 .controls-card {
@@ -130,7 +139,6 @@ button:disabled { background: #d1d5db; cursor: not-allowed; color: #6b7280; }
 /* Table styling */
 table {
   width: 100%; 
-  background: white; 
   border-collapse: collapse;
   font-size: 0.95rem; 
 }
@@ -138,7 +146,7 @@ table {
 /* Pinned Table Headers inside the scrolling panel */
 thead th { 
   position: sticky; 
-  top: 0; /* Keeps the headers pinned to the top of the scrolling box */
+  top: 0; /* Keeps headers visible while scrolling the files */
   background: #f9fafb; 
   z-index: 10; 
   padding: 1rem; 
