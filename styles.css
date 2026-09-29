@@ -9,7 +9,6 @@ body {
   color: #1f2937;
   margin: 0;
   padding: 0;
-  /* FORCES the website to never scroll at the page level */
   height: 100vh; 
   overflow: hidden; 
 }
@@ -22,14 +21,14 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 1rem 0; /* Tighter top/bottom padding */
+  padding: 1rem 0; 
 }
 
 /* Header styling */
 .app-header {
-  flex: 0 0 auto; /* Locks header height */
+  flex: 0 0 auto; 
   text-align: left;
-  margin-bottom: 1rem; /* Tighter margin */
+  margin-bottom: 1rem; 
 }
 .app-header h1 { margin: 0 0 0.25rem 0; }
 .app-header p { margin: 0; color: #4b5563; font-size: 0.95rem; }
@@ -38,8 +37,10 @@ body {
 .main-layout {
   display: flex;
   gap: 2rem; 
-  flex: 1; /* Fills all remaining space below header */
-  min-height: 0; /* CRITICAL: allows the left column inside to scroll */
+  flex: 1; 
+  min-height: 0; 
+  /* 'stretch' forces right panel to equal the height of the left panel */
+  align-items: stretch; 
 }
 
 /* --- LEFT PANEL: Scrolls Independently --- */
@@ -48,7 +49,7 @@ body {
   background: white; 
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  overflow-y: auto; /* Forces internal scrollbar ONLY for the table */
+  overflow-y: auto; 
 }
 
 /* Custom scrollbar for the file list */
@@ -57,14 +58,32 @@ body {
 .left-panel::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 4px; }
 .left-panel::-webkit-scrollbar-thumb:hover { background: #6b7280; }
 
-/* --- RIGHT PANEL: Locked in place, no scrollbar --- */
+/* --- RIGHT PANEL: Flex column to manage Ad space and Controls --- */
 .right-panel {
   flex: 0 0 420px; 
-  /* Removed overflow properties to ensure no scrollbar ever appears here */
+  display: flex;
+  flex-direction: column;
 }
 
-/* Highly Compact Controls Card */
+/* The Ad Container dynamically stretches to fill the top */
+.ad-container {
+  flex: 1; /* This is the magic that pushes the controls down */
+  min-height: 100px; /* Ensures it doesn't completely collapse on short screens */
+  background: #f9fafb;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Highly Compact Controls Card pinned to the bottom */
 .controls-card {
+  flex: 0 0 auto; /* Tells the controls to keep their exact natural height */
   background: white; 
   padding: 1rem;
   border-radius: 8px;
@@ -75,12 +94,12 @@ body {
   background: #f9fafb; 
   padding: 0.75rem;
   border-radius: 6px;
-  margin: 0.75rem 0; /* Tighter margins */
+  margin: 0.75rem 0; 
   border: 1px solid #e5e7eb;
 }
 
 .rule-group {
-  margin-bottom: 0.6rem; /* Tighter margins */
+  margin-bottom: 0.6rem; 
   padding-bottom: 0.6rem; 
   border-bottom: 1px solid #d1d5db;
 }
@@ -90,14 +109,14 @@ body {
 /* Utility class for side-by-side elements */
 .flex-row {
   display: flex;
-  gap: 0.5rem; /* Tighter gap */
+  gap: 0.5rem; 
 }
 
 /* Compact Labels */
 .rule-group label {
   display: block;
   font-size: 0.85rem;
-  margin-bottom: 0.15rem; /* Tighter margin */
+  margin-bottom: 0.15rem; 
   color: #374151;
 }
 
@@ -142,7 +161,7 @@ table {
 /* Pinned Table Headers inside the scrolling panel */
 thead th { 
   position: sticky; 
-  top: 0; /* Keeps headers visible while scrolling the files */
+  top: 0; 
   background: #f9fafb; 
   z-index: 10; 
   padding: 1rem; 
