@@ -7,7 +7,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #f3f4f6;
   color: #1f2937;
-  padding: 2rem 0; /* Removed side padding from body since container handles it */
+  padding: 2rem 0; 
   margin: 0;
 }
 
@@ -30,23 +30,31 @@ body {
 .main-layout {
   display: flex;
   gap: 2rem; 
-  align-items: flex-start;
+  align-items: flex-start; /* Crucial for sticky children */
 }
 
 .left-panel {
-  flex: 1; /* Automatically stretches to fill all the newly added space */
+  flex: 1; 
   min-width: 0; 
 }
 
-/* Right panel stays exactly the same size */
+/* --- THE FIX IS HERE --- */
+/* We moved the sticky properties to the entire right column */
 .right-panel {
   flex: 0 0 420px; 
+  position: sticky;
+  top: 2rem; /* Keeps it 2rem from the top of the browser window */
+  max-height: calc(100vh - 4rem); /* Prevents the panel from overflowing small screens */
+  overflow-y: auto; /* Adds a scrollbar ONLY to the controls if your screen is very small */
 }
+
+/* Custom scrollbar for the right panel just in case */
+.right-panel::-webkit-scrollbar { width: 6px; }
+.right-panel::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
 /* Highly Compact Controls Card */
 .controls-card {
-  position: sticky;
-  top: 2rem; 
+  /* Removed sticky from here, it is now handled by the right-panel */
   background: white; 
   padding: 1rem;
   border-radius: 8px;
