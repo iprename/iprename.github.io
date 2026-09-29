@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>InPlace Rename</title>
-  <link rel="stylesheet" href="styles.css">
+  <!-- The ?v=2 forces the browser to drop the old cached design -->
+  <link rel="stylesheet" href="styles.css?v=2"> 
 </head>
 <body>
   <div class="container">
@@ -59,7 +60,7 @@
               </div>
             </div>
             
-            <!-- Rule 2: Find & Replace (Side-by-Side) -->
+            <!-- Rule 2: Find & Replace -->
             <div class="rule-group">
               <h4>Find & Replace</h4>
               <div class="flex-row">
@@ -83,7 +84,7 @@
               </div>
             </div>
 
-            <!-- Rule 4: Sequential Numbering (Side-by-Side) -->
+            <!-- Rule 4: Sequential Numbering -->
             <div class="rule-group" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
               <h4>
                 <input type="checkbox" id="seqEnable"> 
