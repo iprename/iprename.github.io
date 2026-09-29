@@ -11,8 +11,8 @@ const clearAll = document.getElementById('clearAll');
 const trimEnd = document.getElementById('trimEnd');
 const findInput = document.getElementById('findText');
 const replaceInput = document.getElementById('replaceText');
+const prefixInput = document.getElementById('prefixText');
 const seqEnable = document.getElementById('seqEnable');
-const seqPrefix = document.getElementById('seqPrefix');
 const seqStart = document.getElementById('seqStart');
 const seqPadding = document.getElementById('seqPadding');
 
@@ -24,7 +24,8 @@ renameBtn.addEventListener('click', executeRename);
 [
   clearAll, trimEnd, 
   findInput, replaceInput, 
-  seqEnable, seqPrefix, seqStart, seqPadding
+  prefixInput, 
+  seqEnable, seqStart, seqPadding
 ].forEach(input => {
   input.addEventListener('input', renderPreview);
   input.addEventListener('change', renderPreview);
@@ -93,9 +94,13 @@ function generateNewName(oldName, index) {
     name = name.split(findStr).join(replaceStr);
   }
   
-  // Rule 3: Sequential Numbering
+  // Rule 3: Add Prefix (Applies independently of numbering)
+  if (prefixInput.value) {
+    name = prefixInput.value + name;
+  }
+  
+  // Rule 4: Sequential Numbering
   if (seqEnable.checked) {
-    const prefix = seqPrefix.value;
     const startNum = parseInt(seqStart.value, 10) || 1;
     
     // Parse padding safely to allow '0'
@@ -105,7 +110,7 @@ function generateNewName(oldName, index) {
     const currentNum = startNum + index;
     const numStr = String(currentNum).padStart(padding, '0'); 
     
-    name = prefix + name + numStr;
+    name = name + numStr; // Appends number to the end
   }
   
   // Safety Net: Prevent empty file names
