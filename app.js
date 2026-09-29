@@ -17,11 +17,19 @@ replaceInput.addEventListener('input', renderPreview);
 
 // 1. Prompt user to select a folder
 async function handleSelectFolder() {
+  // Feature Check: If browser does NOT support direct disk access
+  if (!('showDirectoryPicker' in window)) {
+    const currentUrl = window.location.href;
+    document.getElementById('edgeLink').href = `microsoft-edge:${currentUrl}`;
+    document.getElementById('browserPopup').style.display = 'flex';
+    return; // Stop execution here
+  }
+
+  // If browser supports it, open the folder picker
   try {
     directoryHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
-    fileHandles = []; // Reset list
+    fileHandles = []; 
     
-    // Read all files in the folder
     for await (const entry of directoryHandle.values()) {
       if (entry.kind === 'file') {
         fileHandles.push(entry);
@@ -32,8 +40,24 @@ async function handleSelectFolder() {
     renderPreview();
     
   } catch (error) {
-    console.error('Folder selection cancelled or failed:', error);
+    if (error.name !== 'AbortError') {
+      console.error('Folder selection failed:', error);
+    }
   }
+}
+
+// Popup Helper Functions
+function closePopup() {
+  document.getElementById('browserPopup').style.display = 'none';
+}
+
+function copyUrl() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    alert('Link copied! Open Chrome and paste it in the address bar.');
+    closePopup();
+  }).catch(err => {
+    console.error('Failed to copy text: ', err);
+  });
 }
 
 // 2. The Rule Engine: Calculate new names based on user input
@@ -70,7 +94,7 @@ function renderPreview() {
   });
 }
 
-// 4. Actually rename the files on the hard drive
+// 4. Execute the rename on the hard drive
 async function executeRename() {
   renameBtn.disabled = true; // Prevent double-clicking
   
@@ -85,13 +109,20 @@ async function executeRename() {
         statusCell.textContent = 'Success!';
         statusCell.className = 'status-success';
       } catch (error) {
-        statusCell.textContent = 'Error';
-        statusCell.style.color = 'red';
+        statusCell.textContent = 'Error: ' + error.message;
+        statusCell.className = 'status-error';
         console.error(`Failed to rename ${oldName}`, error);
       }
     }
   }
   
-  // Refresh the handles to their new names
-  handleSelectFolder();
+  // Optionally clear inputs and refresh after renaming
+  findInput.value = '';
+  replaceInput.value = '';
+  // Reload the directory contents
+  fileHandles = [];
+  for await (const entry of directoryHandle.values()) {
+    if (entry.kind === 'file') fileHandles.push(entry);
+  }
+  renderPreview();
 }
