@@ -109,10 +109,8 @@ function generateNewName(oldName, index) {
     name = name + numStr; 
   }
   
-  if (name.trim() === '') {
-    name = 'unnamed_file_' + String(index + 1).padStart(3, '0');
-  }
-  
+  // We removed the fallback that forced 'unnamed_file_'. 
+  // If 'name' is completely empty here, it will just cleanly return the extension.
   return name + ext;
 }
 
@@ -153,14 +151,14 @@ async function executeRename() {
   renameBtn.disabled = true; 
   
   try {
-    // Step 2: Create a unique subfolder automatically (e.g., "Renamed_Files_2023-10-25T14-30-00")
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-    const newFolderName = `Renamed_Files_${timestamp}`;
+    // Step 2: Create a unique subfolder automatically using ONLY the date (e.g., "Renamed_Files_2023-10-25")
+    const dateString = new Date().toISOString().split('T')[0];
+    const newFolderName = `Renamed_Files_${dateString}`;
     
-    // This tells the browser to create the directory if it doesn't exist
+    // This tells the browser to create the directory if it doesn't exist, or just open it if it does
     const destDirectoryHandle = await parentDirectoryHandle.getDirectoryHandle(newFolderName, { create: true });
 
-    // Step 3: Loop through files, create new ones inside the brand new subfolder
+    // Step 3: Loop through files, create new ones inside the subfolder
     for (let i = 0; i < fileHandles.length; i++) {
       const handle = fileHandles[i];
       const oldName = handle.name;
