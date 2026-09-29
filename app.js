@@ -86,7 +86,8 @@ function generateNewName(oldName, index) {
     const currentNum = startNum + index;
     const numStr = String(currentNum).padStart(padding, '0'); 
     
-    name = name + prefix + numStr;
+    // Updated logic: Prefix goes to the very front, Number goes to the very back
+    name = prefix + name + numStr;
   }
   
   // Reattach extension
@@ -118,7 +119,7 @@ function renderPreview() {
 
 // 4. Execute the rename on the hard drive
 async function executeRename() {
-  renameBtn.disabled = true; // Disable temporarily while processing
+  renameBtn.disabled = true; 
   
   for (let i = 0; i < fileHandles.length; i++) {
     const handle = fileHandles[i];
@@ -143,7 +144,5 @@ async function executeRename() {
     }
   }
   
-  // Re-enable the button instantly so user doesn't have to re-upload files
-  // (Inputs are kept exactly as they were)
   renameBtn.disabled = false;
 }
