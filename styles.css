@@ -9,9 +9,11 @@ body {
   color: #1f2937;
   padding: 2rem 0; 
   margin: 0;
+  /* Prevent the main website body from scrolling if possible */
+  overflow: hidden; 
 }
 
-/* Stretches to 96% of whatever screen you are using */
+/* Stretches to 96% of the screen */
 .container { 
   width: 96%; 
   max-width: none; 
@@ -30,31 +32,34 @@ body {
 .main-layout {
   display: flex;
   gap: 2rem; 
-  align-items: flex-start; /* Crucial for sticky children */
+  align-items: flex-start; 
 }
 
+/* --- THE FOOLPROOF FIX: INTERNAL SCROLLING --- */
 .left-panel {
   flex: 1; 
   min-width: 0; 
+  /* Limits height to the screen size minus the header/margins */
+  max-height: calc(100vh - 130px); 
+  overflow-y: auto; /* Forces a scrollbar ONLY on the file list */
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background: white;
 }
 
-/* --- THE FIX IS HERE --- */
-/* We moved the sticky properties to the entire right column */
+/* Custom scrollbar for the file list */
+.left-panel::-webkit-scrollbar { width: 8px; }
+.left-panel::-webkit-scrollbar-track { background: #f3f4f6; }
+.left-panel::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 4px; }
+.left-panel::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+
 .right-panel {
   flex: 0 0 420px; 
-  position: sticky;
-  top: 2rem; /* Keeps it 2rem from the top of the browser window */
-  max-height: calc(100vh - 4rem); /* Prevents the panel from overflowing small screens */
-  overflow-y: auto; /* Adds a scrollbar ONLY to the controls if your screen is very small */
+  /* We removed sticky, it just sits here permanently now */
 }
-
-/* Custom scrollbar for the right panel just in case */
-.right-panel::-webkit-scrollbar { width: 6px; }
-.right-panel::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
 /* Highly Compact Controls Card */
 .controls-card {
-  /* Removed sticky from here, it is now handled by the right-panel */
   background: white; 
   padding: 1rem;
   border-radius: 8px;
@@ -127,14 +132,21 @@ table {
   width: 100%; 
   background: white; 
   border-collapse: collapse;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
-  border-radius: 8px;
-  overflow: hidden;
   font-size: 0.95rem; 
 }
 
-th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
-th { background: #f9fafb; }
+/* Pinned Table Headers inside the scrolling panel */
+thead th { 
+  position: sticky; 
+  top: 0; /* Keeps the headers pinned to the top of the scrolling box */
+  background: #f9fafb; 
+  z-index: 10; 
+  padding: 1rem; 
+  text-align: left; 
+  border-bottom: 2px solid #e5e7eb;
+}
+
+tbody td { padding: 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
 .empty-state { text-align: center; color: #6b7280; font-style: italic; padding: 3rem!important; }
 
 .status-ready { color: #3b82f6; }
