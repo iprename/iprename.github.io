@@ -1,47 +1,39 @@
 // Global State
-let directoryHandle = null;
 let fileHandles = [];
 
 // DOM Elements
-const selectFolderBtn = document.getElementById('selectFolderBtn');
+const selectFilesBtn = document.getElementById('selectFilesBtn');
 const renameBtn = document.getElementById('renameBtn');
 const fileList = document.getElementById('fileList');
 const findInput = document.getElementById('findText');
 const replaceInput = document.getElementById('replaceText');
 
 // Event Listeners
-selectFolderBtn.addEventListener('click', handleSelectFolder);
+selectFilesBtn.addEventListener('click', handleSelectFiles);
 renameBtn.addEventListener('click', executeRename);
 findInput.addEventListener('input', renderPreview);
 replaceInput.addEventListener('input', renderPreview);
 
-// 1. Prompt user to select a folder
-async function handleSelectFolder() {
+// 1. Prompt user to select specific files (Ctrl/Shift to select multiple)
+async function handleSelectFiles() {
   // Feature Check: If browser does NOT support direct disk access
-  if (!('showDirectoryPicker' in window)) {
+  if (!('showOpenFilePicker' in window)) {
     const currentUrl = window.location.href;
     document.getElementById('edgeLink').href = `microsoft-edge:${currentUrl}`;
     document.getElementById('browserPopup').style.display = 'flex';
     return; // Stop execution here
   }
 
-  // If browser supports it, open the folder picker
+  // If browser supports it, open the multi-file picker
   try {
-    directoryHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
-    fileHandles = []; 
-    
-    for await (const entry of directoryHandle.values()) {
-      if (entry.kind === 'file') {
-        fileHandles.push(entry);
-      }
-    }
+    fileHandles = await window.showOpenFilePicker({ multiple: true });
     
     renameBtn.disabled = fileHandles.length === 0;
     renderPreview();
     
   } catch (error) {
     if (error.name !== 'AbortError') {
-      console.error('Folder selection failed:', error);
+      console.error('File selection failed:', error);
     }
   }
 }
@@ -105,6 +97,12 @@ async function executeRename() {
     
     if (oldName !== newName) {
       try {
+        // Request write permission for the file before renaming
+        if ((await handle.queryPermission({ mode: 'readwrite' })) !== 'granted') {
+          await handle.requestPermission({ mode: 'readwrite' });
+        }
+        
+        // .move() executes the rename directly on the disk
         await handle.move(newName);
         statusCell.textContent = 'Success!';
         statusCell.className = 'status-success';
@@ -116,13 +114,8 @@ async function executeRename() {
     }
   }
   
-  // Optionally clear inputs and refresh after renaming
+  // Clear inputs and refresh preview to show the updated file names
   findInput.value = '';
   replaceInput.value = '';
-  // Reload the directory contents
-  fileHandles = [];
-  for await (const entry of directoryHandle.values()) {
-    if (entry.kind === 'file') fileHandles.push(entry);
-  }
   renderPreview();
 }
