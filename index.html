@@ -8,74 +8,97 @@
 </head>
 <body>
   <div class="container">
-    <h1>InPlace Rename</h1>
-    <p>Runs entirely in your browser. Files never leave your device.</p>
+    
+    <!-- Top Left Header -->
+    <header class="app-header">
+      <h1>InPlace Rename</h1>
+      <p>Runs entirely in your browser. Files never leave your device.</p>
+    </header>
 
-    <div class="controls-card">
-      <button id="selectFilesBtn" class="primary-btn">1. Select Files</button>
+    <!-- Two Column Layout -->
+    <div class="main-layout">
       
-      <div class="rules-section">
-        <h3>Renaming Rules</h3>
-
-        <!-- Rule 1: Trim / Clear -->
-        <div class="rule-group" style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #d1d5db;">
-          <h4>Trim / Clear Original Name</h4>
-          <div style="margin-bottom: 0.5rem;">
-            <input type="checkbox" id="clearAll">
-            <label for="clearAll">Wipe entire original name</label>
-          </div>
-          <div>
-            <label for="trimEnd">Remove characters from end:</label>
-            <input type="number" id="trimEnd" value="0" min="0" style="width: 70px;">
-          </div>
-        </div>
-        
-        <!-- Rule 2: Find & Replace -->
-        <div class="rule-group" style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #d1d5db;">
-          <h4>Find & Replace</h4>
-          <label for="findText">Find:</label>
-          <input type="text" id="findText" placeholder="e.g., IMG">
-          
-          <label for="replaceText">Replace:</label>
-          <input type="text" id="replaceText" placeholder="e.g., Vacation">
-        </div>
-
-        <!-- Rule 3: Sequential Numbering -->
-        <div class="rule-group">
-          <h4>
-            <input type="checkbox" id="seqEnable"> 
-            <label for="seqEnable">Add Sequential Numbers</label>
-          </h4>
-          <div style="margin-top: 0.5rem;">
-            <label for="seqPrefix">Prefix (optional):</label>
-            <input type="text" id="seqPrefix" placeholder="e.g., _" style="width: 60px;">
-            
-            <label for="seqStart">Start at:</label>
-            <input type="number" id="seqStart" value="1" min="0" style="width: 70px;">
-            
-            <label for="seqPadding">Digits (Zeros):</label>
-            <input type="number" id="seqPadding" value="3" min="1" style="width: 70px;">
-          </div>
-        </div>
+      <!-- Left Column: Live Preview Table -->
+      <div class="left-panel">
+        <table id="previewTable">
+          <thead>
+            <tr>
+              <th>Original Name</th>
+              <th>New Name</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="fileList">
+            <tr>
+              <td colspan="3" class="empty-state">Select files to see them here...</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <button id="renameBtn" class="success-btn" disabled>2. Execute Rename</button>
-    </div>
+      <!-- Right Column: Controls -->
+      <div class="right-panel">
+        <div class="controls-card">
+          <button id="selectFilesBtn" class="primary-btn" style="width: 100%;">1. Select Files</button>
+          
+          <div class="rules-section">
+            <h3 style="margin-top: 0;">Renaming Rules</h3>
 
-    <table id="previewTable">
-      <thead>
-        <tr>
-          <th>Original Name</th>
-          <th>New Name</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="fileList">
-        <tr>
-          <td colspan="3" class="empty-state">Select files to see them here...</td>
-        </tr>
-      </tbody>
-    </table>
+            <!-- Rule 1: Trim / Clear -->
+            <div class="rule-group">
+              <h4>Trim / Clear Original Name</h4>
+              <div style="margin-bottom: 0.75rem;">
+                <input type="checkbox" id="clearAll">
+                <label for="clearAll">Wipe entire original name</label>
+              </div>
+              <div>
+                <label for="trimEnd" style="display:block; margin-bottom:0.25rem;">Remove characters from end:</label>
+                <input type="number" id="trimEnd" value="0" min="0">
+              </div>
+            </div>
+            
+            <!-- Rule 2: Find & Replace -->
+            <div class="rule-group">
+              <h4>Find & Replace</h4>
+              <div style="margin-bottom: 0.5rem;">
+                <label for="findText" style="display:block; margin-bottom:0.25rem;">Find:</label>
+                <input type="text" id="findText" placeholder="e.g., IMG">
+              </div>
+              <div>
+                <label for="replaceText" style="display:block; margin-bottom:0.25rem;">Replace:</label>
+                <input type="text" id="replaceText" placeholder="e.g., Vacation">
+              </div>
+            </div>
+
+            <!-- Rule 3: Sequential Numbering -->
+            <div class="rule-group" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+              <h4>
+                <input type="checkbox" id="seqEnable"> 
+                <label for="seqEnable">Add Sequential Numbers</label>
+              </h4>
+              <div style="margin-top: 0.75rem;">
+                <label for="seqPrefix" style="display:block; margin-bottom:0.25rem;">Prefix (optional):</label>
+                <input type="text" id="seqPrefix" placeholder="e.g., _">
+                
+                <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                  <div style="flex: 1;">
+                    <label for="seqStart" style="display:block; margin-bottom:0.25rem;">Start at:</label>
+                    <input type="number" id="seqStart" value="1" min="0">
+                  </div>
+                  <div style="flex: 1;">
+                    <label for="seqPadding" style="display:block; margin-bottom:0.25rem;">Digits:</label>
+                    <input type="number" id="seqPadding" value="3" min="1">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button id="renameBtn" class="success-btn" style="width: 100%;" disabled>2. Execute Rename</button>
+        </div>
+      </div>
+      
+    </div>
   </div>
 
   <!-- Browser Support Popup -->
@@ -88,7 +111,7 @@
       
       <div class="popup-actions">
         <a id="edgeLink" href="#" class="primary-btn edge-btn">Launch in Edge</a>
-        <a href="#" onclick="copyUrl(); return false;" style="color: #3b82f6; text-decoration: underline; font-size: 0.95rem; display: block; margin-top: 0.5rem;">Copy link for Chrome</a>
+        <a href="#" onclick="copyUrl(); return false;" style="color: #3b82f6; text-decoration: underline; font-size: 0.95rem; display: block; margin-top: 0.5rem; text-align: center;">Copy link for Chrome</a>
       </div>
     </div>
   </div>
