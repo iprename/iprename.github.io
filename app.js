@@ -82,7 +82,6 @@ function generateNewName(oldName, index) {
   } else {
     const trimCount = parseInt(trimEnd.value, 10) || 0;
     if (trimCount > 0) {
-      // Deletes X characters from the end of the base name
       name = name.slice(0, Math.max(0, name.length - trimCount));
     }
   }
@@ -98,7 +97,10 @@ function generateNewName(oldName, index) {
   if (seqEnable.checked) {
     const prefix = seqPrefix.value;
     const startNum = parseInt(seqStart.value, 10) || 1;
-    const padding = parseInt(seqPadding.value, 10) || 1;
+    
+    // Parse padding safely to allow '0'
+    const parsedPadding = parseInt(seqPadding.value, 10);
+    const padding = isNaN(parsedPadding) ? 0 : Math.max(0, parsedPadding);
     
     const currentNum = startNum + index;
     const numStr = String(currentNum).padStart(padding, '0'); 
@@ -106,7 +108,7 @@ function generateNewName(oldName, index) {
     name = prefix + name + numStr;
   }
   
-  // Safety Net: Prevent empty file names (e.g. just ".jpg")
+  // Safety Net: Prevent empty file names
   if (name.trim() === '') {
     name = 'unnamed_file_' + String(index + 1).padStart(3, '0');
   }
