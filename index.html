@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bulk File Renamer</title>
+  <title>InPlace Rename</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Bulk File Renamer</h1>
+    <h1>InPlace Rename</h1>
     <p>Runs entirely in your browser. Files never leave your device.</p>
 
     <div class="controls-card">
@@ -42,6 +42,20 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Browser Support Popup -->
+  <div id="browserPopup" class="popup-overlay" style="display: none;">
+    <div class="popup-card">
+      <h3>Switch Browser to Continue</h3>
+      <p>InPlace Rename requires a Chromium-based browser to modify files directly on your hard drive.</p>
+      
+      <div class="popup-actions">
+        <a id="edgeLink" href="#" class="primary-btn edge-btn">Launch in Edge</a>
+        <button onclick="copyUrl()" class="primary-btn chrome-btn">Copy Link for Chrome</button>
+      </div>
+      <button onclick="closePopup()" class="cancel-btn">Cancel</button>
+    </div>
   </div>
 
   <script src="app.js"></script>
