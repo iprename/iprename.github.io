@@ -72,8 +72,11 @@
       <p>InPlace Rename requires a Chromium-based browser to modify files directly on your hard drive.</p>
       
       <div class="popup-actions">
+        <!-- Edge is still a button -->
         <a id="edgeLink" href="#" class="primary-btn edge-btn">Launch in Edge</a>
-        <button onclick="copyUrl()" class="primary-btn chrome-btn">Copy Link for Chrome</button>
+        
+        <!-- Chrome is now just a clickable hyperlink text -->
+        <a href="#" onclick="copyUrl(); return false;" style="color: #3b82f6; text-decoration: underline; font-size: 0.95rem; display: block; margin-top: 0.5rem;">Copy link for Chrome</a>
       </div>
       <button onclick="closePopup()" class="cancel-btn">Cancel</button>
     </div>
