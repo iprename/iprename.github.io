@@ -56,7 +56,7 @@ function copyUrl() {
   }).catch(err => console.error('Failed to copy text: ', err));
 }
 
-// Helper: Separate extension from filename (e.g. "photo.jpg" -> "photo" and ".jpg")
+// Helper: Separate extension from filename
 function splitExtension(filename) {
   const lastDot = filename.lastIndexOf('.');
   if (lastDot === -1 || lastDot === 0) return { name: filename, ext: '' };
@@ -84,7 +84,6 @@ function generateNewName(oldName, index) {
     const padding = parseInt(seqPadding.value, 10) || 1;
     
     const currentNum = startNum + index;
-    // padStart formats '1' to '001' if padding is 3
     const numStr = String(currentNum).padStart(padding, '0'); 
     
     name = name + prefix + numStr;
@@ -119,7 +118,7 @@ function renderPreview() {
 
 // 4. Execute the rename on the hard drive
 async function executeRename() {
-  renameBtn.disabled = true; 
+  renameBtn.disabled = true; // Disable temporarily while processing
   
   for (let i = 0; i < fileHandles.length; i++) {
     const handle = fileHandles[i];
@@ -144,9 +143,7 @@ async function executeRename() {
     }
   }
   
-  // Clear inputs and refresh preview
-  findInput.value = '';
-  replaceInput.value = '';
-  seqEnable.checked = false;
-  renderPreview();
+  // Re-enable the button instantly so user doesn't have to re-upload files
+  // (Inputs are kept exactly as they were)
+  renameBtn.disabled = false;
 }
