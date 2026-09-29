@@ -136,15 +136,14 @@ function renderPreview() {
   });
 }
 
-// 4. Ask for destination folder, then copy and rename files
+// 4. Ask for destination, create subfolder, and copy files
 async function executeRename() {
-  let destDirectoryHandle;
+  let parentDirectoryHandle;
   
-  // Step 1: Ask the user where to save the files
+  // Step 1: Ask the user where they want to save the new folder
   try {
-    destDirectoryHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+    parentDirectoryHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
   } catch (error) {
-    // User cancelled the folder selection
     if (error.name !== 'AbortError') {
       console.error('Failed to select destination folder:', error);
     }
@@ -153,33 +152,45 @@ async function executeRename() {
 
   renameBtn.disabled = true; 
   
-  // Step 2: Loop through files, create new ones in the destination folder
-  for (let i = 0; i < fileHandles.length; i++) {
-    const handle = fileHandles[i];
-    const oldName = handle.name;
-    const newName = generateNewName(oldName, i);
-    const statusCell = document.getElementById(`status-${i}`);
+  try {
+    // Step 2: Create a unique subfolder automatically (e.g., "Renamed_Files_2023-10-25T14-30-00")
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    const newFolderName = `Renamed_Files_${timestamp}`;
     
-    try {
-      statusCell.textContent = 'Saving...';
+    // This tells the browser to create the directory if it doesn't exist
+    const destDirectoryHandle = await parentDirectoryHandle.getDirectoryHandle(newFolderName, { create: true });
+
+    // Step 3: Loop through files, create new ones inside the brand new subfolder
+    for (let i = 0; i < fileHandles.length; i++) {
+      const handle = fileHandles[i];
+      const oldName = handle.name;
+      const newName = generateNewName(oldName, i);
+      const statusCell = document.getElementById(`status-${i}`);
       
-      // Get the actual raw data of the original file
-      const originalFile = await handle.getFile();
-      
-      // Create a brand new file inside the destination folder
-      const newFileHandle = await destDirectoryHandle.getFileHandle(newName, { create: true });
-      const writable = await newFileHandle.createWritable();
-      
-      // Stream the data from the old file to the new file (efficient for large files)
-      await originalFile.stream().pipeTo(writable);
-      
-      statusCell.textContent = 'Saved!';
-      statusCell.className = 'status-success';
-    } catch (error) {
-      statusCell.textContent = 'Error';
-      statusCell.className = 'status-error';
-      console.error(`Failed to copy and rename ${oldName}`, error);
+      try {
+        statusCell.textContent = 'Saving...';
+        
+        // Get the actual raw data of the original file
+        const originalFile = await handle.getFile();
+        
+        // Create the new file inside the dynamically created subfolder
+        const newFileHandle = await destDirectoryHandle.getFileHandle(newName, { create: true });
+        const writable = await newFileHandle.createWritable();
+        
+        // Stream the data across
+        await originalFile.stream().pipeTo(writable);
+        
+        statusCell.textContent = 'Saved!';
+        statusCell.className = 'status-success';
+      } catch (error) {
+        statusCell.textContent = 'Error';
+        statusCell.className = 'status-error';
+        console.error(`Failed to copy and rename ${oldName}`, error);
+      }
     }
+  } catch (error) {
+    console.error('Failed to create subfolder or save files:', error);
+    alert('An error occurred while creating the folder or saving the files. Please check permissions.');
   }
   
   renameBtn.disabled = false;
