@@ -60,7 +60,8 @@ body {
 
 /* --- RIGHT PANEL: Flex column to manage Ad space and Controls --- */
 .right-panel {
-  flex: 0 0 420px; 
+  /* Horizontally Shrunk: Was 420px, now 360px */
+  flex: 0 0 360px; 
   display: flex;
   flex-direction: column;
 }
@@ -70,26 +71,27 @@ body {
   margin-top: auto; /* Automatically pushes the card to the absolute bottom */
   flex: 0 0 auto; 
   background: white; 
-  padding: 1rem;
+  /* Vertically Shrunk: Tighter padding inside the card */
+  padding: 0.85rem;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .rules-section {
   background: #f9fafb; 
-  padding: 0.75rem;
+  padding: 0.65rem;
   border-radius: 6px;
-  margin: 0.75rem 0; 
+  margin: 0.65rem 0; 
   border: 1px solid #e5e7eb;
 }
 
 .rule-group {
-  margin-bottom: 0.6rem; 
-  padding-bottom: 0.6rem; 
+  margin-bottom: 0.5rem; 
+  padding-bottom: 0.5rem; 
   border-bottom: 1px solid #d1d5db;
 }
 
-.rule-group h4 { margin: 0 0 0.35rem 0; font-size: 0.9rem; color: #111827; }
+.rule-group h4 { margin: 0 0 0.25rem 0; font-size: 0.85rem; color: #111827; }
 
 /* Utility class for side-by-side elements */
 .flex-row {
@@ -100,7 +102,7 @@ body {
 /* Compact Labels */
 .rule-group label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   margin-bottom: 0.15rem; 
   color: #374151;
 }
@@ -115,18 +117,18 @@ body {
 .rule-group input[type="text"],
 .rule-group input[type="number"] {
   width: 100%;
-  padding: 0.35rem 0.5rem; 
+  padding: 0.3rem 0.4rem; 
   border: 1px solid #d1d5db; 
   border-radius: 4px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 /* Compact Buttons */
 button, .primary-btn {
-  padding: 0.6rem 1rem; 
+  padding: 0.5rem 1rem; 
   border: none; border-radius: 6px;
   font-weight: bold; cursor: pointer; text-align: center;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 button:disabled { background: #d1d5db; cursor: not-allowed; color: #6b7280; }
