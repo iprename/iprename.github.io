@@ -70,26 +70,29 @@
               </div>
             </div>
 
-            <!-- Rule 3: Sequential Numbering -->
+            <!-- Rule 3: Add Prefix -->
+            <div class="rule-group">
+              <h4>Add Prefix</h4>
+              <div>
+                <label for="prefixText" style="display:block; margin-bottom:0.25rem;">Prefix:</label>
+                <input type="text" id="prefixText" placeholder="e.g., _">
+              </div>
+            </div>
+
+            <!-- Rule 4: Sequential Numbering -->
             <div class="rule-group" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
               <h4>
                 <input type="checkbox" id="seqEnable"> 
                 <label for="seqEnable">Add Sequential Numbers</label>
               </h4>
-              <div style="margin-top: 0.75rem;">
-                <label for="seqPrefix" style="display:block; margin-bottom:0.25rem;">Prefix (optional):</label>
-                <input type="text" id="seqPrefix" placeholder="e.g., _">
-                
-                <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
-                  <div style="flex: 1;">
-                    <label for="seqStart" style="display:block; margin-bottom:0.25rem;">Start at:</label>
-                    <input type="number" id="seqStart" value="1" min="0">
-                  </div>
-                  <div style="flex: 1;">
-                    <label for="seqPadding" style="display:block; margin-bottom:0.25rem;">Digits (Zeros):</label>
-                    <!-- Updated value and min to 0 -->
-                    <input type="number" id="seqPadding" value="0" min="0">
-                  </div>
+              <div style="display: flex; gap: 1rem; margin-top: 0.75rem;">
+                <div style="flex: 1;">
+                  <label for="seqStart" style="display:block; margin-bottom:0.25rem;">Start at:</label>
+                  <input type="number" id="seqStart" value="1" min="0">
+                </div>
+                <div style="flex: 1;">
+                  <label for="seqPadding" style="display:block; margin-bottom:0.25rem;">Digits (Zeros):</label>
+                  <input type="number" id="seqPadding" value="0" min="0">
                 </div>
               </div>
             </div>
