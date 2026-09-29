@@ -7,13 +7,14 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #f3f4f6;
   color: #1f2937;
-  padding: 2rem;
+  padding: 2rem 0; /* Removed side padding from body since container handles it */
   margin: 0;
 }
 
-/* Increased max-width from 950px to 1400px to eliminate dead side margins and stretch the left table */
+/* Stretches to 96% of whatever screen you are using */
 .container { 
-  max-width: 1400px; 
+  width: 96%; 
+  max-width: none; 
   margin: 0 auto; 
 }
 
@@ -28,12 +29,12 @@ body {
 /* Grid / Flex Layout */
 .main-layout {
   display: flex;
-  gap: 2rem; /* Slightly increased gap to let the wider table breathe */
+  gap: 2rem; 
   align-items: flex-start;
 }
 
 .left-panel {
-  flex: 1; /* Automatically stretches to fill the newly added container width */
+  flex: 1; /* Automatically stretches to fill all the newly added space */
   min-width: 0; 
 }
 
@@ -115,10 +116,13 @@ button:disabled { background: #d1d5db; cursor: not-allowed; color: #6b7280; }
 
 /* Table styling */
 table {
-  width: 100%; background: white; border-collapse: collapse;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 8px;
+  width: 100%; 
+  background: white; 
+  border-collapse: collapse;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+  border-radius: 8px;
   overflow: hidden;
-  font-size: 0.95rem; /* Bumped text size slightly since the table is wider now */
+  font-size: 0.95rem; 
 }
 
 th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
