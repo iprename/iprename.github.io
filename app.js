@@ -94,14 +94,16 @@ function generateNewName(oldName, index) {
     name = name.split(findStr).join(replaceStr);
   }
   
-  // Rule 3: Add Prefix (Applies independently of numbering)
+  // Rule 3: Add Prefix
   if (prefixInput.value) {
     name = prefixInput.value + name;
   }
   
   // Rule 4: Sequential Numbering
   if (seqEnable.checked) {
-    const startNum = parseInt(seqStart.value, 10) || 1;
+    // Parse safely to ensure 0 is treated as a valid number, not fallback to 1
+    const parsedStart = parseInt(seqStart.value, 10);
+    const startNum = isNaN(parsedStart) ? 1 : parsedStart;
     
     // Parse padding safely to allow '0'
     const parsedPadding = parseInt(seqPadding.value, 10);
@@ -110,7 +112,7 @@ function generateNewName(oldName, index) {
     const currentNum = startNum + index;
     const numStr = String(currentNum).padStart(padding, '0'); 
     
-    name = name + numStr; // Appends number to the end
+    name = name + numStr; 
   }
   
   // Safety Net: Prevent empty file names
