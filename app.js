@@ -7,6 +7,8 @@ const renameBtn = document.getElementById('renameBtn');
 const fileList = document.getElementById('fileList');
 
 // DOM Elements - Rules
+const clearAll = document.getElementById('clearAll');
+const trimEnd = document.getElementById('trimEnd');
 const findInput = document.getElementById('findText');
 const replaceInput = document.getElementById('replaceText');
 const seqEnable = document.getElementById('seqEnable');
@@ -19,7 +21,11 @@ selectFilesBtn.addEventListener('click', handleSelectFiles);
 renameBtn.addEventListener('click', executeRename);
 
 // Trigger live preview on any input change
-[findInput, replaceInput, seqEnable, seqPrefix, seqStart, seqPadding].forEach(input => {
+[
+  clearAll, trimEnd, 
+  findInput, replaceInput, 
+  seqEnable, seqPrefix, seqStart, seqPadding
+].forEach(input => {
   input.addEventListener('input', renderPreview);
   input.addEventListener('change', renderPreview);
 });
@@ -70,14 +76,25 @@ function splitExtension(filename) {
 function generateNewName(oldName, index) {
   let { name, ext } = splitExtension(oldName);
   
-  // Rule 1: Find & Replace
+  // Rule 1: Trim / Clear Original Name
+  if (clearAll.checked) {
+    name = '';
+  } else {
+    const trimCount = parseInt(trimEnd.value, 10) || 0;
+    if (trimCount > 0) {
+      // Deletes X characters from the end of the base name
+      name = name.slice(0, Math.max(0, name.length - trimCount));
+    }
+  }
+  
+  // Rule 2: Find & Replace
   const findStr = findInput.value;
   const replaceStr = replaceInput.value;
-  if (findStr) {
+  if (findStr && name.length > 0) {
     name = name.split(findStr).join(replaceStr);
   }
   
-  // Rule 2: Sequential Numbering
+  // Rule 3: Sequential Numbering
   if (seqEnable.checked) {
     const prefix = seqPrefix.value;
     const startNum = parseInt(seqStart.value, 10) || 1;
@@ -86,11 +103,14 @@ function generateNewName(oldName, index) {
     const currentNum = startNum + index;
     const numStr = String(currentNum).padStart(padding, '0'); 
     
-    // Updated logic: Prefix goes to the very front, Number goes to the very back
     name = prefix + name + numStr;
   }
   
-  // Reattach extension
+  // Safety Net: Prevent empty file names (e.g. just ".jpg")
+  if (name.trim() === '') {
+    name = 'unnamed_file_' + String(index + 1).padStart(3, '0');
+  }
+  
   return name + ext;
 }
 
