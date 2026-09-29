@@ -1,4 +1,4 @@
-/* Universal Box Sizing to ensure inputs fit perfectly inside the sidebar */
+/* Universal Box Sizing */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -11,7 +11,7 @@ body {
   margin: 0;
 }
 
-/* Reduced width to pull the left table in tighter */
+/* Reduced width to pull the left table in tightly */
 .container { 
   max-width: 950px; 
   margin: 0 auto; 
@@ -20,69 +20,90 @@ body {
 /* Header styling */
 .app-header {
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
-.app-header h1 { margin: 0 0 0.5rem 0; }
-.app-header p { margin: 0; color: #4b5563; }
+.app-header h1 { margin: 0 0 0.25rem 0; }
+.app-header p { margin: 0; color: #4b5563; font-size: 0.95rem; }
 
 /* Grid / Flex Layout */
 .main-layout {
   display: flex;
-  gap: 2rem;
-  align-items: flex-start; /* Crucial: stops the right side from stretching to the table's height */
+  gap: 1.5rem;
+  align-items: flex-start;
 }
 
 .left-panel {
-  flex: 1; /* Takes up remaining space automatically */
+  flex: 1; 
   min-width: 0; 
 }
 
+/* Right panel widened to 420px to fit side-by-side inputs, shrinking the left panel */
 .right-panel {
-  flex: 0 0 340px; /* Fixed width for the controls sidebar */
+  flex: 0 0 420px; 
 }
 
-/* Controls & Rules - THIS IS THE STICKY ELEMENT */
+/* Highly Compact Controls Card */
 .controls-card {
   position: sticky;
-  top: 2rem; /* Keeps it 2rem from the top of the screen when scrolling */
-  max-height: calc(100vh - 4rem); /* Prevents the card itself from overflowing the screen */
-  overflow-y: auto; /* Adds a scrollbar inside the card if on a tiny laptop screen */
+  top: 2rem; 
   background: white; 
-  padding: 1.5rem; 
+  padding: 1rem; /* Reduced from 1.5rem */
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Custom, subtle scrollbar for the controls card */
-.controls-card::-webkit-scrollbar { width: 6px; }
-.controls-card::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-
 .rules-section {
-  background: #f9fafb; padding: 1rem; border-radius: 6px;
-  margin: 1.5rem 0; border: 1px solid #e5e7eb;
+  background: #f9fafb; 
+  padding: 0.75rem; /* Reduced from 1rem */
+  border-radius: 6px;
+  margin: 1rem 0; /* Reduced from 1.5rem */
+  border: 1px solid #e5e7eb;
 }
 
 .rule-group {
-  margin-bottom: 1.25rem; 
-  padding-bottom: 1.25rem; 
+  margin-bottom: 0.75rem; /* Reduced from 1.25rem */
+  padding-bottom: 0.75rem; 
   border-bottom: 1px solid #d1d5db;
 }
 
-.rule-group h4 { margin: 0 0 0.75rem 0; font-size: 0.95rem; }
+.rule-group h4 { margin: 0 0 0.5rem 0; font-size: 0.9rem; color: #111827; }
 
-/* Ensure inputs span the full width of their sidebar container */
+/* Utility class for side-by-side elements */
+.flex-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Compact Labels */
+.rule-group label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+  color: #374151;
+}
+
+.rule-group label.inline-label {
+  display: inline;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+/* Compact Inputs */
 .rule-group input[type="text"],
 .rule-group input[type="number"] {
   width: 100%;
-  padding: 0.5rem; 
+  padding: 0.35rem 0.5rem; /* Shorter inputs */
   border: 1px solid #d1d5db; 
   border-radius: 4px;
+  font-size: 0.9rem;
 }
 
+/* Compact Buttons */
 button, .primary-btn {
-  padding: 0.75rem 1.5rem; border: none; border-radius: 6px;
+  padding: 0.6rem 1rem; /* Shorter buttons */
+  border: none; border-radius: 6px;
   font-weight: bold; cursor: pointer; text-align: center;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 button:disabled { background: #d1d5db; cursor: not-allowed; color: #6b7280; }
@@ -97,11 +118,12 @@ table {
   width: 100%; background: white; border-collapse: collapse;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 8px;
   overflow: hidden;
+  font-size: 0.9rem;
 }
 
-th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
+th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
 th { background: #f9fafb; }
-.empty-state { text-align: center; color: #6b7280; font-style: italic; }
+.empty-state { text-align: center; color: #6b7280; font-style: italic; padding: 2rem!important; }
 
 .status-ready { color: #3b82f6; }
 .status-success { color: #10b981; font-weight: bold; }
@@ -132,3 +154,4 @@ th { background: #f9fafb; }
 .popup-actions { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
 .primary-btn.edge-btn { background: #0078D7; text-decoration: none; display: block; }
 .primary-btn.edge-btn:hover { background: #005a9e; }
+.chrome-link { color: #3b82f6; text-decoration: underline; font-size: 0.95rem; display: block; margin-top: 0.25rem; text-align: center; }
