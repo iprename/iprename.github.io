@@ -16,8 +16,21 @@
       
       <div class="rules-section">
         <h3>Renaming Rules</h3>
+
+        <!-- Rule 1: Trim / Clear -->
+        <div class="rule-group" style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #d1d5db;">
+          <h4>Trim / Clear Original Name</h4>
+          <div style="margin-bottom: 0.5rem;">
+            <input type="checkbox" id="clearAll">
+            <label for="clearAll">Wipe entire original name</label>
+          </div>
+          <div>
+            <label for="trimEnd">Remove characters from end:</label>
+            <input type="number" id="trimEnd" value="0" min="0" style="width: 70px;">
+          </div>
+        </div>
         
-        <!-- Rule 1: Find & Replace -->
+        <!-- Rule 2: Find & Replace -->
         <div class="rule-group" style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #d1d5db;">
           <h4>Find & Replace</h4>
           <label for="findText">Find:</label>
@@ -27,7 +40,7 @@
           <input type="text" id="replaceText" placeholder="e.g., Vacation">
         </div>
 
-        <!-- Rule 2: Sequential Numbering -->
+        <!-- Rule 3: Sequential Numbering -->
         <div class="rule-group">
           <h4>
             <input type="checkbox" id="seqEnable"> 
@@ -68,7 +81,6 @@
   <!-- Browser Support Popup -->
   <div id="browserPopup" class="popup-overlay" style="display: none;">
     <div class="popup-card">
-      <!-- Close X Button -->
       <button class="close-x" onclick="closePopup()" aria-label="Close">&times;</button>
       
       <h3>Switch Browser to Continue</h3>
