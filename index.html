@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>InPlace Rename</title>
-  <!-- The ?v=2 forces the browser to drop the old cached design -->
-  <link rel="stylesheet" href="styles.css?v=2"> 
+  <!-- v=3 forces the browser to drop the old cached design immediately -->
+  <link rel="stylesheet" href="styles.css?v=3"> 
 </head>
 <body>
   <div class="container">
@@ -43,7 +43,7 @@
           <button id="selectFilesBtn" class="primary-btn" style="width: 100%;">1. Select Files</button>
           
           <div class="rules-section">
-            <h3 style="margin: 0 0 0.75rem 0; font-size: 1.1rem;">Renaming Rules</h3>
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.1rem;">Renaming Rules</h3>
 
             <!-- Rule 1: Trim / Clear -->
             <div class="rule-group">
@@ -90,7 +90,7 @@
                 <input type="checkbox" id="seqEnable"> 
                 <label for="seqEnable" class="inline-label">Add Sequential Numbers</label>
               </h4>
-              <div class="flex-row" style="margin-top: 0.5rem;">
+              <div class="flex-row" style="margin-top: 0.25rem;">
                 <div style="flex: 1;">
                   <label for="seqStart">Start at:</label>
                   <input type="number" id="seqStart" value="1" min="0">
