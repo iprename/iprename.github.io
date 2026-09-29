@@ -12,17 +12,37 @@
     <p>Runs entirely in your browser. Files never leave your device.</p>
 
     <div class="controls-card">
-      <!-- Button updated to Select Files -->
       <button id="selectFilesBtn" class="primary-btn">1. Select Files</button>
       
       <div class="rules-section">
         <h3>Renaming Rules</h3>
-        <div class="rule-group">
-          <label for="findText">Find text:</label>
+        
+        <!-- Rule 1: Find & Replace -->
+        <div class="rule-group" style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #d1d5db;">
+          <h4>Find & Replace</h4>
+          <label for="findText">Find:</label>
           <input type="text" id="findText" placeholder="e.g., IMG">
           
-          <label for="replaceText">Replace with:</label>
+          <label for="replaceText">Replace:</label>
           <input type="text" id="replaceText" placeholder="e.g., Vacation">
+        </div>
+
+        <!-- Rule 2: Sequential Numbering -->
+        <div class="rule-group">
+          <h4>
+            <input type="checkbox" id="seqEnable"> 
+            <label for="seqEnable">Add Sequential Numbers</label>
+          </h4>
+          <div style="margin-top: 0.5rem;">
+            <label for="seqPrefix">Prefix (optional):</label>
+            <input type="text" id="seqPrefix" placeholder="e.g., _" style="width: 60px;">
+            
+            <label for="seqStart">Start at:</label>
+            <input type="number" id="seqStart" value="1" min="0" style="width: 70px;">
+            
+            <label for="seqPadding">Digits (Zeros):</label>
+            <input type="number" id="seqPadding" value="3" min="1" style="width: 70px;">
+          </div>
         </div>
       </div>
 
@@ -39,7 +59,6 @@
       </thead>
       <tbody id="fileList">
         <tr>
-          <!-- Empty state text updated -->
           <td colspan="3" class="empty-state">Select files to see them here...</td>
         </tr>
       </tbody>
