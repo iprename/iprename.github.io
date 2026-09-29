@@ -58,16 +58,20 @@ th { background: #f9fafb; }
 }
 
 .popup-card {
-  background: white; padding: 2rem; border-radius: 8px;
+  position: relative; /* Allows positioning the close X inside this box */
+  background: white; padding: 2.5rem 2rem 2rem 2rem; border-radius: 8px;
   width: 90%; max-width: 400px; text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-.popup-actions { display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0; }
+.close-x {
+  position: absolute; top: 12px; right: 15px;
+  background: transparent; border: none; padding: 0;
+  font-size: 1.5rem; line-height: 1; color: #6b7280;
+  cursor: pointer;
+}
+.close-x:hover { color: #1f2937; }
+
+.popup-actions { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
 .primary-btn.edge-btn { background: #0078D7; text-decoration: none; display: block; }
 .primary-btn.edge-btn:hover { background: #005a9e; }
-.primary-btn.chrome-btn { background: #4285F4; }
-.primary-btn.chrome-btn:hover { background: #3367d6; }
-
-.cancel-btn { background: transparent; border: none; color: #6b7280; padding: 0.5rem; width: 100%; }
-.cancel-btn:hover { color: #374151; background: #f3f4f6; }
