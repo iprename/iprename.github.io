@@ -11,9 +11,9 @@ body {
   margin: 0;
 }
 
-/* Reduced width to pull the left table in tightly */
+/* Increased max-width from 950px to 1400px to eliminate dead side margins and stretch the left table */
 .container { 
-  max-width: 950px; 
+  max-width: 1400px; 
   margin: 0 auto; 
 }
 
@@ -28,16 +28,16 @@ body {
 /* Grid / Flex Layout */
 .main-layout {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem; /* Slightly increased gap to let the wider table breathe */
   align-items: flex-start;
 }
 
 .left-panel {
-  flex: 1; 
+  flex: 1; /* Automatically stretches to fill the newly added container width */
   min-width: 0; 
 }
 
-/* Right panel widened to 420px to fit side-by-side inputs, shrinking the left panel */
+/* Right panel stays exactly the same size */
 .right-panel {
   flex: 0 0 420px; 
 }
@@ -47,21 +47,21 @@ body {
   position: sticky;
   top: 2rem; 
   background: white; 
-  padding: 1rem; /* Reduced from 1.5rem */
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .rules-section {
   background: #f9fafb; 
-  padding: 0.75rem; /* Reduced from 1rem */
+  padding: 0.75rem;
   border-radius: 6px;
-  margin: 1rem 0; /* Reduced from 1.5rem */
+  margin: 1rem 0;
   border: 1px solid #e5e7eb;
 }
 
 .rule-group {
-  margin-bottom: 0.75rem; /* Reduced from 1.25rem */
+  margin-bottom: 0.75rem;
   padding-bottom: 0.75rem; 
   border-bottom: 1px solid #d1d5db;
 }
@@ -92,7 +92,7 @@ body {
 .rule-group input[type="text"],
 .rule-group input[type="number"] {
   width: 100%;
-  padding: 0.35rem 0.5rem; /* Shorter inputs */
+  padding: 0.35rem 0.5rem; 
   border: 1px solid #d1d5db; 
   border-radius: 4px;
   font-size: 0.9rem;
@@ -100,7 +100,7 @@ body {
 
 /* Compact Buttons */
 button, .primary-btn {
-  padding: 0.6rem 1rem; /* Shorter buttons */
+  padding: 0.6rem 1rem; 
   border: none; border-radius: 6px;
   font-weight: bold; cursor: pointer; text-align: center;
   font-size: 0.95rem;
@@ -118,12 +118,12 @@ table {
   width: 100%; background: white; border-collapse: collapse;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 8px;
   overflow: hidden;
-  font-size: 0.9rem;
+  font-size: 0.95rem; /* Bumped text size slightly since the table is wider now */
 }
 
-th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
+th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
 th { background: #f9fafb; }
-.empty-state { text-align: center; color: #6b7280; font-style: italic; padding: 2rem!important; }
+.empty-state { text-align: center; color: #6b7280; font-style: italic; padding: 3rem!important; }
 
 .status-ready { color: #3b82f6; }
 .status-success { color: #10b981; font-weight: bold; }
