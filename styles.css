@@ -65,25 +65,10 @@ body {
   flex-direction: column;
 }
 
-/* The Ad Container dynamically stretches to fill the top */
-.ad-container {
-  flex: 1; /* This is the magic that pushes the controls down */
-  min-height: 100px; /* Ensures it doesn't completely collapse on short screens */
-  background: #f9fafb;
-  border: 2px dashed #d1d5db;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  font-size: 0.9rem;
-  text-align: center;
-}
-
 /* Highly Compact Controls Card pinned to the bottom */
 .controls-card {
-  flex: 0 0 auto; /* Tells the controls to keep their exact natural height */
+  margin-top: auto; /* Automatically pushes the card to the absolute bottom */
+  flex: 0 0 auto; 
   background: white; 
   padding: 1rem;
   border-radius: 8px;
