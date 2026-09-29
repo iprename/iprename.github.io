@@ -1,3 +1,8 @@
+/* Universal Box Sizing to ensure inputs fit perfectly inside the sidebar */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #f3f4f6;
@@ -6,11 +11,40 @@ body {
   margin: 0;
 }
 
-.container { max-width: 900px; margin: 0 auto; }
+/* Expanded width for a two-column layout */
+.container { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+}
 
+/* Header styling */
+.app-header {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+.app-header h1 { margin: 0 0 0.5rem 0; }
+.app-header p { margin: 0; color: #4b5563; }
+
+/* Grid / Flex Layout */
+.main-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.left-panel {
+  flex: 1; /* Takes up remaining space automatically */
+  min-width: 0; 
+}
+
+.right-panel {
+  flex: 0 0 380px; /* Fixed width sidebar for controls */
+}
+
+/* Controls & Rules */
 .controls-card {
   background: white; padding: 1.5rem; border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .rules-section {
@@ -18,9 +52,21 @@ body {
   margin: 1.5rem 0; border: 1px solid #e5e7eb;
 }
 
-.rule-group input {
-  padding: 0.5rem; margin-right: 1rem;
-  border: 1px solid #d1d5db; border-radius: 4px;
+.rule-group {
+  margin-bottom: 1.25rem; 
+  padding-bottom: 1.25rem; 
+  border-bottom: 1px solid #d1d5db;
+}
+
+.rule-group h4 { margin: 0 0 0.75rem 0; font-size: 0.95rem; }
+
+/* Ensure inputs span the full width of their sidebar container */
+.rule-group input[type="text"],
+.rule-group input[type="number"] {
+  width: 100%;
+  padding: 0.5rem; 
+  border: 1px solid #d1d5db; 
+  border-radius: 4px;
 }
 
 button, .primary-btn {
@@ -36,6 +82,7 @@ button:disabled { background: #d1d5db; cursor: not-allowed; color: #6b7280; }
 .success-btn { background: #10b981; color: white; }
 .success-btn:hover:not(:disabled) { background: #059669; }
 
+/* Table styling */
 table {
   width: 100%; background: white; border-collapse: collapse;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 8px;
@@ -58,7 +105,7 @@ th { background: #f9fafb; }
 }
 
 .popup-card {
-  position: relative; /* Allows positioning the close X inside this box */
+  position: relative;
   background: white; padding: 2.5rem 2rem 2rem 2rem; border-radius: 8px;
   width: 90%; max-width: 400px; text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
