@@ -11,9 +11,9 @@ body {
   margin: 0;
 }
 
-/* Expanded width for a two-column layout */
+/* Shrunk overall width to make the left section tighter */
 .container { 
-  max-width: 1200px; 
+  max-width: 1000px; 
   margin: 0 auto; 
 }
 
@@ -29,7 +29,7 @@ body {
 .main-layout {
   display: flex;
   gap: 2rem;
-  align-items: flex-start;
+  align-items: flex-start; /* Crucial: allows the right panel to act independently of the left panel's height */
 }
 
 .left-panel {
@@ -37,9 +37,19 @@ body {
   min-width: 0; 
 }
 
+/* Updated Right Panel with Sticky positioning */
 .right-panel {
-  flex: 0 0 380px; /* Fixed width sidebar for controls */
+  flex: 0 0 380px; /* Fixed width sidebar */
+  position: sticky;
+  top: 2rem; /* Sticks 2rem from the top of the browser window */
+  max-height: calc(100vh - 4rem); /* Ensures the panel itself doesn't exceed screen height */
+  overflow-y: auto; /* Adds a neat scrollbar just for the controls if using a tiny laptop screen */
+  padding-right: 0.5rem; /* Slight padding for the custom scrollbar */
 }
+
+/* Custom, subtle scrollbar for the right panel (if it ever needs to scroll) */
+.right-panel::-webkit-scrollbar { width: 6px; }
+.right-panel::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
 /* Controls & Rules */
 .controls-card {
